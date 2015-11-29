@@ -1,5 +1,5 @@
-﻿setInterval(function(){
-    $.get('https://mail.google.com/mail/feed/atom', function(data){
+﻿var keep_going = setInterval(function(){
+    $.get('https://mail.google.com/mail/feed/atom', function(data, xhr){
         var total_count = $(data).find('fullcount').html();
 
         if( total_count == undefined || total_count == '' )
@@ -15,6 +15,13 @@
 
         if( $('.herculesUnreadMessageCount') == undefined || $('.herculesUnreadMessageCount').length == 0 )
             $('.pa.Y').prepend($('<li>').addClass('herculesUnreadMessageCount').addClass('oin9Fc').addClass('cN').html('<img src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_custom-cluster_24px_g60_r3.png"><span class="sM hercViewUnreadMessages" title="Unread">Unread</span>') );
+    }).fail(function(){
+        window.open(
+            'http://gmail.com',
+            '_blank'
+        );
+        location.reload();
+        //clearInterval( keep_going );
     });
 },1000);
 
